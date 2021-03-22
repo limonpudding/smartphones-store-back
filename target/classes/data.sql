@@ -1,3 +1,7 @@
+-- noinspection SqlDialectInspectionForFile
+
+-- noinspection SqlNoDataSourceInspectionForFile
+
 insert into genre (name) values ('Классика');
 insert into genre (name) values ('Фантастика');
 insert into genre (name) values ('Зарубежная литература');
@@ -15,3 +19,7 @@ insert into book_genre(book_id, genre_id) values (4,1);
 insert into book_genre(book_id, genre_id) values (4,2);
 insert into book_genre(book_id, genre_id) values (5,1);
 insert into book_genre(book_id, genre_id) values (5,3);
+
+
+insert into smartphone(model_name, brand, price, cpu, gpu, ram, rom)
+values ('A2 Lite', 'XIAOMI', 12990, 'Snapdragon 420', 'auf 223', 4, 64);
