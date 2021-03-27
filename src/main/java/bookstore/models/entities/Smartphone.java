@@ -1,5 +1,7 @@
 package bookstore.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -13,8 +15,10 @@ public class Smartphone {
     @Column(nullable = false)
     private String modelName;
 
-    @Column(nullable = false)
-    private String brand;
+    @JsonIgnore
+    @ManyToOne (optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
     @Column(nullable = false)
     private BigDecimal price;
@@ -31,10 +35,13 @@ public class Smartphone {
     @Column(nullable = false)
     private Integer rom;
 
+    @Column
+    private String description;
+
     public Smartphone() {
     }
 
-    public Smartphone(Long id, String modelName, String brand, BigDecimal price, String cpu, String gpu, Integer ram, Integer rom) {
+    public Smartphone(Long id, String modelName, Brand brand, BigDecimal price, String cpu, String gpu, Integer ram, Integer rom, String description) {
         this.id = id;
         this.modelName = modelName;
         this.brand = brand;
@@ -43,6 +50,7 @@ public class Smartphone {
         this.gpu = gpu;
         this.ram = ram;
         this.rom = rom;
+        this.description = description;
     }
 
     public Long getId() {
@@ -61,11 +69,11 @@ public class Smartphone {
         this.modelName = modelName;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
@@ -107,5 +115,13 @@ public class Smartphone {
 
     public void setRom(Integer rom) {
         this.rom = rom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
