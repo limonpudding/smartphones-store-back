@@ -1,7 +1,12 @@
 package bookstore.models.repositories;
 
 import bookstore.models.entities.Smartphone;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SmartphoneRepository extends CrudRepository<Smartphone, Long> {
+import java.util.List;
+
+public interface SmartphoneRepository extends JpaRepository<Smartphone, Long> {
+
+    List<Smartphone> findSmartphonesByBrand_Id(Long brand_id);
+
 }

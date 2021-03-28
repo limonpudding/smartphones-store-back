@@ -1,8 +1,7 @@
 package bookstore.models.repositories;
 
 import bookstore.models.entities.Brand;
-import bookstore.models.entities.Smartphone;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BrandRepository extends CrudRepository<Brand, Long> {
+public interface BrandRepository extends JpaRepository<Brand, Long> {
 }

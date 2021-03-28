@@ -15,7 +15,6 @@ public class Smartphone {
     @Column(nullable = false)
     private String modelName;
 
-    @JsonIgnore
     @ManyToOne (optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "brand_id")
     private Brand brand;

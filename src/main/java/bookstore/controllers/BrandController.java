@@ -18,7 +18,7 @@ public class BrandController {
     
     @GetMapping("/brands")
     public List<Brand> index() {
-        return (List<Brand>) brandRepository.findAll();
+        return brandRepository.findAll();
     }
     
     @GetMapping("/brands/{id}")
@@ -41,9 +41,7 @@ public class BrandController {
                 smartphone.setName(newBrand.getName());
                 return brandRepository.save(smartphone);
             })
-            .orElseGet(() -> {
-                return null;
-            });
+            .orElse(null);
     }
 
     @DeleteMapping("/brands/{id}")

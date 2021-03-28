@@ -21,7 +21,7 @@ public class BookController {
      */
     @GetMapping("/books")
     public List<Book> index() {
-        return (List<Book>) books.findAll();
+        return books.findAll();
     }
 
     /**
@@ -32,11 +32,7 @@ public class BookController {
     public Book get(@PathVariable long id) {
         Optional<Book> result = books.findById(id);
 
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
-        }
+        return result.orElse(null);
     }
 
     /**
@@ -63,9 +59,7 @@ public class BookController {
                 book.setGenres(newBook.getGenres());
                 return books.save(book);
             })
-            .orElseGet(() -> {
-                return null;
-            });
+            .orElse(null);
     }
 
     /**

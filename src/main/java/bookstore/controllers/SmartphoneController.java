@@ -21,7 +21,15 @@ public class SmartphoneController {
      */
     @GetMapping("/smartphones")
     public List<Smartphone> index() {
-        return (List<Smartphone>) smartphoneRepository.findAll();
+        return smartphoneRepository.findAll();
+    }
+
+    /**
+     * Список по бренду - GET
+     */
+    @GetMapping("/smartphones/brand/{brandId}")
+    public List<Smartphone> allByBrand(@PathVariable long brandId) {
+        return smartphoneRepository.findSmartphonesByBrand_Id(brandId);
     }
 
     /**
@@ -32,11 +40,7 @@ public class SmartphoneController {
     public Smartphone get(@PathVariable long id) {
         Optional<Smartphone> result = smartphoneRepository.findById(id);
 
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
-        }
+        return result.orElse(null);
     }
 
     /**

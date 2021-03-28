@@ -18,18 +18,14 @@ public class GenreController {
 
     @GetMapping("/genres")
     public List<Genre> index() {
-        return (List<Genre>) (genres.findAll());
+        return genres.findAll();
     }
 
     @GetMapping("/genres/{id}")
     public Genre get(@PathVariable long id) {
         Optional<Genre> result = genres.findById(id);
 
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
-        }
+        return result.orElse(null);
     }
 
     @PostMapping("/genres")
