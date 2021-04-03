@@ -1,6 +1,6 @@
-package bookstore.models.repositories;
+package techstore.models.repositories;
 
-import bookstore.models.entities.Smartphone;
+import techstore.models.entities.Smartphone;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

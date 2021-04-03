@@ -1,7 +1,7 @@
-package bookstore.controllers;
+package techstore.controllers;
 
-import bookstore.models.entities.Smartphone;
-import bookstore.models.repositories.SmartphoneRepository;
+import techstore.models.entities.Smartphone;
+import techstore.models.repositories.SmartphoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

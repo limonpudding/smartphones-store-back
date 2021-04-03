@@ -1,7 +1,7 @@
-package bookstore.controllers;
+package techstore.controllers;
 
-import bookstore.models.entities.Brand;
-import bookstore.models.repositories.BrandRepository;
+import techstore.models.entities.Brand;
+import techstore.models.repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

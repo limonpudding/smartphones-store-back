@@ -1,4 +1,4 @@
-package bookstore.dto;
+package techstore.dto;
 
 public class SmartphoneDto {
 }

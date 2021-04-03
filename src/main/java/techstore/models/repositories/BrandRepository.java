@@ -1,6 +1,6 @@
-package bookstore.models.repositories;
+package techstore.models.repositories;
 
-import bookstore.models.entities.Brand;
+import techstore.models.entities.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BrandRepository extends JpaRepository<Brand, Long> {

@@ -1,4 +1,4 @@
-package bookstore.models.entities;
+package techstore.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -1,13 +1,15 @@
-package bookstore.models.entities;
+package techstore.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import techstore.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-public class Order {
+public class PurchaseOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +18,7 @@ public class Order {
     @Column(nullable = false)
     private Long number;
 
-    @JsonIgnoreProperties({"smartphones"})
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name="order_smartphones",
@@ -29,16 +31,21 @@ public class Order {
     private BigDecimal fullPrice;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    @Column(nullable = false)
     private Long userId;
 
-    public Order() {
+    public PurchaseOrder() {
     }
 
-    public Order(Long id, Long number, List<Smartphone> smartphones, BigDecimal fullPrice, Long userId) {
+    public PurchaseOrder(Long id, Long number, List<Smartphone> smartphones, BigDecimal fullPrice, OrderStatus status, Long userId) {
         this.id = id;
         this.number = number;
         this.smartphones = smartphones;
         this.fullPrice = fullPrice;
+        this.status = status;
         this.userId = userId;
     }
 
@@ -72,6 +79,14 @@ public class Order {
 
     public void setFullPrice(BigDecimal fullPrice) {
         this.fullPrice = fullPrice;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public Long getUserId() {

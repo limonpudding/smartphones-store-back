@@ -1,9 +1,11 @@
-package bookstore.models.entities;
+package techstore.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class Smartphone {
@@ -37,10 +39,19 @@ public class Smartphone {
     @Column
     private String description;
 
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name="order_smartphones",
+            joinColumns = @JoinColumn(name = "smartphone_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
+    private List<PurchaseOrder> purchaseOrders;
+
     public Smartphone() {
     }
 
-    public Smartphone(Long id, String modelName, Brand brand, BigDecimal price, String cpu, String gpu, Integer ram, Integer rom, String description) {
+    public Smartphone(Long id, String modelName, Brand brand, BigDecimal price, String cpu, String gpu, Integer ram, Integer rom, String description, List<PurchaseOrder> purchaseOrders) {
         this.id = id;
         this.modelName = modelName;
         this.brand = brand;
@@ -50,6 +61,7 @@ public class Smartphone {
         this.ram = ram;
         this.rom = rom;
         this.description = description;
+        this.purchaseOrders = purchaseOrders;
     }
 
     public Long getId() {
@@ -122,5 +134,13 @@ public class Smartphone {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<PurchaseOrder> getOrders() {
+        return purchaseOrders;
+    }
+
+    public void setOrders(List<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 }
