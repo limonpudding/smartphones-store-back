@@ -1,0 +1,55 @@
+create table BRAND
+(
+    ID   SERIAL primary key,
+    NAME VARCHAR(255)
+);
+
+INSERT INTO PUBLIC.BRAND (ID, NAME) VALUES (1, 'XIAOMI');
+INSERT INTO PUBLIC.BRAND (ID, NAME) VALUES (2, 'Apple');
+INSERT INTO PUBLIC.BRAND (ID, NAME) VALUES (3, 'Honor');
+INSERT INTO PUBLIC.BRAND (ID, NAME) VALUES (4, 'Samsung');
+
+create table SMARTPHONE
+(
+    ID          SERIAL         primary key,
+    CPU         VARCHAR(255)   not null,
+    DESCRIPTION VARCHAR(255),
+    GPU         VARCHAR(255)   not null,
+    MODEL_NAME  VARCHAR(255)   not null,
+    PRICE       DECIMAL(19, 2) not null,
+    RAM         INTEGER        not null,
+    ROM         INTEGER        not null,
+    BRAND_ID    BIGINT         not null,
+    constraint FK_SMARTPHONE_TO_BRAND
+        foreign key (BRAND_ID) references BRAND (ID)
+);
+
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (1, 'Snapdragon 420', 'Lorem Ipsum', 'auf 223', 'A2 Lite', 12990.00, 4, 64, 1);
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (2, 'M1', 'Lorem Ipsum', 'auf 223', 'SE 2020', 44590.00, 3, 64, 2);
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (3, 'Snapdragon 420', 'Lorem Ipsum', 'auf 223', 'POCO F3', 12990.00, 4, 256, 1);
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (4, 'M1', 'Lorem Ipsum', 'auf 223', 'iPhone 11', 44590.00, 4, 128, 2);
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (5, 'Snapdragon 420', 'Lorem Ipsum', 'auf 223', 'MI 9T', 12990.00, 4, 128, 1);
+INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (6, 'Snapdragon 640', 'Lorem Ipsum', 'auf 223', 'Honor 30i', 44590.00, 3, 128, 3);
+
+create table PURCHASE_ORDER
+(
+    ID         SERIAL         primary key,
+    FULL_PRICE DECIMAL(19, 2) not null,
+    NUMBER     BIGINT         not null,
+    STATUS     VARCHAR(255)   not null,
+    USER_ID    BIGINT         not null
+);
+
+INSERT INTO PUBLIC.PURCHASE_ORDER (ID, FULL_PRICE, NUMBER, STATUS, USER_ID) VALUES (1, 140000.00, 1111, 'PROCESSING', 1);
+
+create table ORDER_SMARTPHONES
+(
+    SMARTPHONE_ID BIGINT not null,
+    ORDER_ID      BIGINT not null,
+    constraint FK_ORDPHO_TO_SMARTPHONE
+        foreign key (SMARTPHONE_ID) references SMARTPHONE (ID),
+    constraint FK_ORDPHO_TO_PUR_ORDER
+        foreign key (ORDER_ID) references PURCHASE_ORDER (ID)
+);
+
+INSERT INTO PUBLIC.ORDER_SMARTPHONES (SMARTPHONE_ID, ORDER_ID) VALUES (1, 1);

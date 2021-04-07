@@ -1,6 +1,7 @@
 package techstore.controllers;
 
 import techstore.models.entities.Smartphone;
+import techstore.models.repositories.BrandRepository;
 import techstore.models.repositories.SmartphoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ public class SmartphoneController {
     @Autowired
     SmartphoneRepository smartphoneRepository;
 
+    @Autowired
+    BrandRepository brandRepository;
     /**
      * Полный список - GET
      */
@@ -49,6 +52,7 @@ public class SmartphoneController {
     @PostMapping("/smartphones")
     @ResponseStatus(HttpStatus.CREATED)
     public Smartphone create(@RequestBody Smartphone smartphone) {
+        smartphone.setBrand(brandRepository.findById(smartphone.getBrand().getId()).get());
         return smartphoneRepository.save(smartphone);
     }
 

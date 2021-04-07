@@ -19,7 +19,7 @@ public class Brand {
     }
 
     @JsonIgnore
-    @OneToMany (mappedBy="brand", fetch=FetchType.EAGER)
+    @OneToMany (mappedBy="brand", fetch=FetchType.LAZY)
     private Collection<Smartphone> smartphones;
 
     public Brand(Long id, String name) {
