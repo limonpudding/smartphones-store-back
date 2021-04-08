@@ -12,6 +12,7 @@ import techstore.models.repositories.AppUserRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserDetailService implements UserDetailsService {
@@ -19,16 +20,15 @@ public class UserDetailService implements UserDetailsService {
     @Autowired
     private AppUserRepository appUserRepository;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser user = appUserRepository.findByUserName(username);
+        AppUser user = appUserRepository.findByUserName(username).orElse(null);
 
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Пользователь не существует");
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getUserRole().name()));
 
         // TODO проверка пароля
 

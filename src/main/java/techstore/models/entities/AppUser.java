@@ -1,5 +1,7 @@
 package techstore.models.entities;
 
+import techstore.models.enums.UserRole;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,14 +11,15 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userName;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String userRole;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
     public AppUser() {
     }
@@ -45,11 +48,11 @@ public class AppUser {
         this.password = password;
     }
 
-    public String getUserRole() {
+    public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(String role) {
-        this.userRole = role;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

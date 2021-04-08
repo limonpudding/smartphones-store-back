@@ -39,6 +39,7 @@ public class SmartphoneController {
      * Возвращаем одну книгу - GET
      * @param id
      */
+
     @GetMapping("/smartphones/{id}")
     public Smartphone get(@PathVariable long id) {
         Optional<Smartphone> result = smartphoneRepository.findById(id);
