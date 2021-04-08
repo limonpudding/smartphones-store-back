@@ -17,7 +17,7 @@ public class Smartphone {
     @Column(nullable = false)
     private String modelName;
 
-    @OneToOne (optional = false, fetch=FetchType.EAGER)
+    @ManyToOne (optional = false, fetch=FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 

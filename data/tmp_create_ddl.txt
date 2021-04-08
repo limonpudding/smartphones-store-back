@@ -53,3 +53,13 @@ create table ORDER_SMARTPHONES
 );
 
 INSERT INTO PUBLIC.ORDER_SMARTPHONES (SMARTPHONE_ID, ORDER_ID) VALUES (1, 1);
+
+create table APP_USER
+(
+    ID          serial       primary key,
+    USER_NAME   VARCHAR(255) not null,
+    PASSWORD    VARCHAR(255) not null,
+    USER_ROLE   VARCHAR(255) not null
+);
+
+INSERT INTO PUBLIC.APP_USER (USER_NAME, PASSWORD, USER_ROLE) VALUES ('limon', '123', 'default');
