@@ -12,7 +12,6 @@ import techstore.models.repositories.AppUserRepository;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class UserDetailService implements UserDetailsService {

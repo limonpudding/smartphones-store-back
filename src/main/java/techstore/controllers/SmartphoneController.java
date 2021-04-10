@@ -1,5 +1,6 @@
 package techstore.controllers;
 
+import techstore.models.entities.Brand;
 import techstore.models.entities.Smartphone;
 import techstore.models.repositories.BrandRepository;
 import techstore.models.repositories.SmartphoneRepository;
@@ -64,10 +65,11 @@ public class SmartphoneController {
     @PutMapping("/smartphones/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Smartphone save(@PathVariable long id, @RequestBody Smartphone newSmartphone) {
+        Brand brand = brandRepository.findById(newSmartphone.getBrand().getId()).get();
         return smartphoneRepository.findById(id)
             .map(smartphone -> {
                 smartphone.setModelName(newSmartphone.getModelName());
-                smartphone.setBrand(newSmartphone.getBrand());
+                smartphone.setBrand(brand);
                 smartphone.setPrice(newSmartphone.getPrice());
                 smartphone.setCpu(newSmartphone.getCpu());
                 smartphone.setGpu(newSmartphone.getGpu());
@@ -75,9 +77,7 @@ public class SmartphoneController {
                 smartphone.setRom(newSmartphone.getRom());
                 return smartphoneRepository.save(smartphone);
             })
-            .orElseGet(() -> {
-                return null;
-            });
+            .orElse(null);
     }
 
     /**
