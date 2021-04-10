@@ -15,11 +15,11 @@ public class PurchaseOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long number;
+    @Column(nullable = false, unique = true)
+    private String number;
 
-    @JsonIgnore
-    @ManyToMany
+    @JsonIgnoreProperties({"purchaseOrders"})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="order_smartphones",
             joinColumns = @JoinColumn(name = "order_id"),
@@ -37,16 +37,10 @@ public class PurchaseOrder {
     @Column(nullable = false)
     private Long userId;
 
-    public PurchaseOrder() {
-    }
+    @Transient
+    private String userName;
 
-    public PurchaseOrder(Long id, Long number, List<Smartphone> smartphones, BigDecimal fullPrice, OrderStatus status, Long userId) {
-        this.id = id;
-        this.number = number;
-        this.smartphones = smartphones;
-        this.fullPrice = fullPrice;
-        this.status = status;
-        this.userId = userId;
+    public PurchaseOrder() {
     }
 
     public Long getId() {
@@ -57,11 +51,11 @@ public class PurchaseOrder {
         this.id = id;
     }
 
-    public Long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -95,5 +89,13 @@ public class PurchaseOrder {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

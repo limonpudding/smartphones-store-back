@@ -1,3 +1,9 @@
+drop table ORDER_SMARTPHONES;
+drop table PURCHASE_ORDER;
+drop table APP_USER;
+drop table SMARTPHONE;
+drop table BRAND;
+
 create table BRAND
 (
     ID   SERIAL primary key,
@@ -19,9 +25,7 @@ create table SMARTPHONE
     PRICE       DECIMAL(19, 2) not null,
     RAM         INTEGER        not null,
     ROM         INTEGER        not null,
-    BRAND_ID    BIGINT         not null,
-    constraint FK_SMARTPHONE_TO_BRAND
-        foreign key (BRAND_ID) references BRAND (ID)
+    BRAND_ID    BIGINT         not null references BRAND (ID)
 );
 
 INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (1, 'Snapdragon 420', 'Lorem Ipsum', 'auf 223', 'A2 Lite', 12990.00, 4, 64, 1);
@@ -31,35 +35,34 @@ INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM
 INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (5, 'Snapdragon 420', 'Lorem Ipsum', 'auf 223', 'MI 9T', 12990.00, 4, 128, 1);
 INSERT INTO PUBLIC.SMARTPHONE (ID, CPU, DESCRIPTION, GPU, MODEL_NAME, PRICE, RAM, ROM, BRAND_ID) VALUES (6, 'Snapdragon 640', 'Lorem Ipsum', 'auf 223', 'Honor 30i', 44590.00, 3, 128, 3);
 
-create table PURCHASE_ORDER
-(
-    ID         SERIAL         primary key,
-    FULL_PRICE DECIMAL(19, 2) not null,
-    NUMBER     BIGINT         not null,
-    STATUS     VARCHAR(255)   not null,
-    USER_ID    BIGINT         not null
-);
-
-INSERT INTO PUBLIC.PURCHASE_ORDER (ID, FULL_PRICE, NUMBER, STATUS, USER_ID) VALUES (1, 140000.00, 1111, 'PROCESSING', 1);
-
-create table ORDER_SMARTPHONES
-(
-    SMARTPHONE_ID BIGINT not null,
-    ORDER_ID      BIGINT not null,
-    constraint FK_ORDPHO_TO_SMARTPHONE
-        foreign key (SMARTPHONE_ID) references SMARTPHONE (ID),
-    constraint FK_ORDPHO_TO_PUR_ORDER
-        foreign key (ORDER_ID) references PURCHASE_ORDER (ID)
-);
-
-INSERT INTO PUBLIC.ORDER_SMARTPHONES (SMARTPHONE_ID, ORDER_ID) VALUES (1, 1);
-
 create table APP_USER
 (
     ID          serial       primary key,
-    USER_NAME   VARCHAR(255) not null,
+    USER_NAME   VARCHAR(255) not null unique,
     PASSWORD    VARCHAR(255) not null,
     USER_ROLE   VARCHAR(255) not null
 );
 
-INSERT INTO PUBLIC.APP_USER (USER_NAME, PASSWORD, USER_ROLE) VALUES ('limon', '123', 'default');
+INSERT INTO PUBLIC.APP_USER (USER_NAME, PASSWORD, USER_ROLE) VALUES ('limon', '$2y$12$96p1QHAdBmuF/6td5bmOpeX8ggGrhe0Dc4LyZvJHDqy9Qo5jc1evW', 'USER');
+INSERT INTO PUBLIC.APP_USER (USER_NAME, PASSWORD, USER_ROLE) VALUES ('admin', '$2y$12$96p1QHAdBmuF/6td5bmOpeX8ggGrhe0Dc4LyZvJHDqy9Qo5jc1evW', 'ADMIN');
+
+
+create table PURCHASE_ORDER
+(
+    ID         SERIAL         primary key,
+    FULL_PRICE DECIMAL(19, 2) not null,
+    NUMBER     VARCHAR(255)   not null,
+    STATUS     VARCHAR(255)   not null,
+    USER_ID    BIGINT         references APP_USER (ID)
+);
+
+INSERT INTO PUBLIC.PURCHASE_ORDER (ID, FULL_PRICE, NUMBER, STATUS, USER_ID) VALUES (1, 140000.00, 'yyyyMMddHHmmssSSS', 'PROCESSING', 1);
+
+create table ORDER_SMARTPHONES
+(
+    SMARTPHONE_ID BIGINT not null references SMARTPHONE (ID),
+    ORDER_ID      BIGINT not null references PURCHASE_ORDER (ID)
+);
+
+INSERT INTO PUBLIC.ORDER_SMARTPHONES (SMARTPHONE_ID, ORDER_ID) VALUES (1, 1);
+

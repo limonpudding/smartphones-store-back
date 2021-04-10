@@ -136,11 +136,11 @@ public class Smartphone {
         this.description = description;
     }
 
-    public List<PurchaseOrder> getOrders() {
+    public List<PurchaseOrder> getPurchaseOrders() {
         return purchaseOrders;
     }
 
-    public void setOrders(List<PurchaseOrder> purchaseOrders) {
+    public void setPurchaseOrders(List<PurchaseOrder> purchaseOrders) {
         this.purchaseOrders = purchaseOrders;
     }
 }
