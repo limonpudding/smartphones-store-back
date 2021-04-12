@@ -14,7 +14,6 @@ import techstore.models.repositories.SmartphoneRepository;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -74,11 +73,16 @@ public class PurchaseOrdersController {
         return purchaseOrderRepository.save(order);
     }
 
-//    @PutMapping("/purchaseOrders/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public PurchaseOrder save(@PathVariable long id, @RequestBody PurchaseOrder newPurchaseOrder) {
-//
-//    }
+    @PutMapping("/purchaseOrders/submit/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PurchaseOrder save(@PathVariable long id) {
+        return purchaseOrderRepository.findById(id)
+                .map(order -> {
+                    order.setStatus(OrderStatus.DONE);
+                    return purchaseOrderRepository.save(order);
+                })
+                .orElse(null);
+    }
 
     @DeleteMapping("/purchaseOrders/{id}")
     @ResponseStatus(HttpStatus.OK)
