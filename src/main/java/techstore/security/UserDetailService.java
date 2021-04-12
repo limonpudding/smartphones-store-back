@@ -29,8 +29,6 @@ public class UserDetailService implements UserDetailsService {
 
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getUserRole().name()));
 
-        // TODO проверка пароля
-
         return new User(user.getUserName(), user.getPassword(), authorities);
     }
 }
