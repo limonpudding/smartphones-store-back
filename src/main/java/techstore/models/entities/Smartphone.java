@@ -10,7 +10,8 @@ import java.util.List;
 public class Smartphone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "smartphoneOrderIdSeq", sequenceName = "SMARTPHONE_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "smartphoneOrderIdSeq")
     private Long id;
 
     @Column(nullable = false)

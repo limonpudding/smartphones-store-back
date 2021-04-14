@@ -9,10 +9,11 @@ import java.util.Collection;
 public class Brand {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "brandIdSeq", sequenceName = "BRAND_ID_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "brandIdSeq")
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     public Brand() {
