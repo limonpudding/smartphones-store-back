@@ -3,7 +3,7 @@ package techstore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import techstore.enums.OrderStatus;
+import techstore.models.enums.OrderStatus;
 import techstore.models.entities.AppUser;
 import techstore.models.entities.PurchaseOrder;
 import techstore.models.entities.Smartphone;
@@ -35,6 +35,16 @@ public class PurchaseOrdersController {
     @GetMapping("/purchaseOrders")
     public List<PurchaseOrder> index() {
         return purchaseOrderRepository.findAll();
+    }
+
+    @GetMapping("/purchaseOrders/user/{userName}")
+    public List<PurchaseOrder> allByUser(@PathVariable String userName) {
+        Optional<AppUser> dbUser = appUserRepository.findByUserName(userName);
+        if (dbUser.isPresent()) {
+            return purchaseOrderRepository.findPurchaseOrdersByUserId(dbUser.get().getId());
+        } else {
+            return null;
+        }
     }
     
     @GetMapping("/purchaseOrders/{id}")

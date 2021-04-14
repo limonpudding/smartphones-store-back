@@ -1,4 +1,4 @@
-package techstore.enums;
+package techstore.models.enums;
 
 public enum OrderStatus {
 

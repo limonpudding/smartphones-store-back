@@ -1,8 +1,7 @@
 package techstore.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import techstore.enums.OrderStatus;
+import techstore.models.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

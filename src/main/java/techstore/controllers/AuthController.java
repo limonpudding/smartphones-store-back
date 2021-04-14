@@ -32,5 +32,15 @@ public class AuthController {
         }
         return UserRole.GUEST;
     }
+
+    @PostMapping(value = "/register")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public UserRole register(@RequestBody AppUser user) {
+        user.setUserRole(UserRole.USER);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+        return appUserRepository.save(user).getUserRole();
+    }
 }
 
