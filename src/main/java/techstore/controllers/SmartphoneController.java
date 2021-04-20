@@ -1,5 +1,6 @@
 package techstore.controllers;
 
+import org.springframework.security.access.annotation.Secured;
 import techstore.models.entities.Brand;
 import techstore.models.entities.Smartphone;
 import techstore.models.repositories.BrandRepository;
@@ -20,50 +21,38 @@ public class SmartphoneController {
 
     @Autowired
     BrandRepository brandRepository;
-    /**
-     * Полный список - GET
-     */
+
     @GetMapping("/smartphones")
+    @Secured("USER")
     public List<Smartphone> index() {
         return smartphoneRepository.findAll();
     }
 
-    /**
-     * Список по бренду - GET
-     */
     @GetMapping("/smartphones/brand/{brandId}")
+    @Secured("USER")
     public List<Smartphone> allByBrand(@PathVariable long brandId) {
         return smartphoneRepository.findSmartphonesByBrand_Id(brandId);
     }
 
-    /**
-     * Возвращаем одну книгу - GET
-     * @param id
-     */
-
     @GetMapping("/smartphones/{id}")
+    @Secured("USER")
     public Smartphone get(@PathVariable long id) {
         Optional<Smartphone> result = smartphoneRepository.findById(id);
 
         return result.orElse(null);
     }
 
-    /**
-     * Создание новой записи - POST
-     */
     @PostMapping("/smartphones")
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured("ADMIN")
     public Smartphone create(@RequestBody Smartphone smartphone) {
         smartphone.setBrand(brandRepository.findById(smartphone.getBrand().getId()).get());
         return smartphoneRepository.save(smartphone);
     }
 
-    /**
-     * Сохранение записи - PUT
-     * @param id
-     */
     @PutMapping("/smartphones/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Secured("ADMIN")
     public Smartphone save(@PathVariable long id, @RequestBody Smartphone newSmartphone) {
         Brand brand = brandRepository.findById(newSmartphone.getBrand().getId()).get();
         return smartphoneRepository.findById(id)
@@ -80,12 +69,9 @@ public class SmartphoneController {
             .orElse(null);
     }
 
-    /**
-     * Удаление записи - DELETE
-     * @param id
-     */
     @DeleteMapping("/smartphones/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Secured("ADMIN")
     public void delete(@PathVariable long id) {
         smartphoneRepository.deleteById(id);
     }

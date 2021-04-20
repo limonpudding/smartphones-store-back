@@ -2,6 +2,7 @@ package techstore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import techstore.models.entities.AppUser;
@@ -15,14 +16,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
+@Secured("ADMIN")
 public class AppUserController {
 
     @Autowired
     AppUserRepository appUserRepository;
 
-    /**
-     * Полный список - GET
-     */
     @GetMapping("/users")
     public List<AppUser> index() {
         return appUserRepository.findAll().stream().map(user -> {
@@ -35,19 +34,12 @@ public class AppUserController {
         }).collect(Collectors.toList());
     }
 
-    /**
-     * Возвращаем одну запись - GET
-     * @param id
-     */
     @GetMapping("/users/{id}")
     public AppUser get(@PathVariable long id) {
         Optional<AppUser> result = appUserRepository.findById(id);
         return result.orElse(null);
     }
 
-    /**
-     * Создание новой записи - POST
-     */
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public AppUser create(@RequestBody AppUser user) {
@@ -55,10 +47,6 @@ public class AppUserController {
         return appUserRepository.save(user);
     }
 
-    /**
-     * Сохранение записи - PUT
-     * @param id
-     */
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AppUser save(@PathVariable long id, @RequestBody AppUser newUser) {
@@ -75,19 +63,12 @@ public class AppUserController {
         }
     }
 
-    /**
-     * Удаление записи - DELETE
-     * @param id
-     */
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id) {
         appUserRepository.deleteById(id);
     }
 
-    /**
-     * Полный список - GET
-     */
     @GetMapping("/roles")
     public List<UserRole> roles() {
         return Arrays.asList(UserRole.USER, UserRole.ADMIN);
@@ -98,5 +79,4 @@ public class AppUserController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
     }
-
 }
