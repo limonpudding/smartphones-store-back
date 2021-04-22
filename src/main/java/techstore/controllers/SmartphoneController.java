@@ -23,13 +23,11 @@ public class SmartphoneController {
     BrandRepository brandRepository;
 
     @GetMapping("/smartphones")
-    @Secured("USER")
     public List<Smartphone> index() {
         return smartphoneRepository.findAll();
     }
 
     @GetMapping("/smartphones/brand/{brandId}")
-    @Secured("USER")
     public List<Smartphone> allByBrand(@PathVariable long brandId) {
         return smartphoneRepository.findSmartphonesByBrand_Id(brandId);
     }

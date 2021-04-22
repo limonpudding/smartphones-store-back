@@ -18,7 +18,6 @@ public class BrandController {
     BrandRepository brandRepository;
     
     @GetMapping("/brands")
-    @Secured("USER")
     public List<Brand> index() {
         return brandRepository.findAll();
     }
